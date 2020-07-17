@@ -325,7 +325,7 @@ class Scraper:
             if not csv_exists:
                 writer.writeheader()
 
-            writer.writerow({'YTS ID': id,
+            writer.writerow({'YTS ID': imdb_id,
                              'Movie Title': name,
                              'Year': year,
                              'Language': language,
