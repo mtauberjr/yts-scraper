@@ -286,13 +286,13 @@ class Scraper:
         if self.imdb_id:
             filename = '{} {} - {}'.format(movie_name, quality, imdb_id)
         else:
-            filename = '{} {}'.format(movie_name, quality)
+            filename = '{} {}'.format(movie_name, quality, imdb_id)
 
         path = os.path.join(directory, filename)
         return path
 
     # Write binary content to .torrent file
-    def __download_file(self, bin_content_tor, bin_content_img, path, movie_name, movie_id):
+    def __download_file(self, bin_content_tor, bin_content_img, path, movie_name, movie_id, imdb_id):
         if self.csv_only:
             return
 
@@ -314,25 +314,26 @@ class Scraper:
         self.existing_file_counter = 0
         return True
 
-    def __log_csv(self, id, name, year, language, rating, quality, yts_url, torrent_url):
+    def __log_csv(self, id, name, year, language, rating, quality, yts_url, torrent_url,imdb_id):
         path = os.path.join(os.path.curdir, 'YTS-Scraper.csv')
         csv_exists = os.path.isfile(path)
 
         with open(path, mode='a') as csv_file:
-            headers = ['YTS ID', 'Movie Title', 'Year', 'Language', 'Rating', 'Quality', 'YTS URL', 'Torrent URL']
+            headers = ['YTS ID', 'Movie Title', 'Year', 'Language', 'Rating', 'Quality', 'YTS URL', 'Torrent URL', 'IMDB']
             writer = csv.DictWriter(csv_file, delimiter=',', lineterminator='\n', quotechar='"', quoting=csv.QUOTE_ALL, fieldnames=headers)
 
             if not csv_exists:
                 writer.writeheader()
 
-            writer.writerow({'YTS ID': imdb_id,
+            writer.writerow({'YTS ID': id,
                              'Movie Title': name,
                              'Year': year,
                              'Language': language,
                              'Rating': rating,
                              'Quality': quality,
                              'YTS URL': yts_url,
-                             'Torrent URL': torrent_url
+                             'Torrent URL': torrent_url,
+                             'IMBD': torrent_url
                             })
 
 
