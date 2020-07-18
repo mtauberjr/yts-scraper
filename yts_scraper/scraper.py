@@ -252,7 +252,7 @@ class Scraper:
                         is_download_successful = self.__download_file(bin_content_tor, bin_content_img, path, movie_name, movie_id)
             else:
                 if self.quality == 'all' or self.quality == quality:
-                    self.__log_csv(movie_id, movie_name_short, year, language, movie_rating, quality, yts_url, torrent_url)
+                    self.__log_csv(movie_id, movie_name_short, year, language, movie_rating, quality, yts_url, torrent_url, imdb_id)
                     bin_content_tor = (requests.get(torrent_url)).content
                     path = self.__build_path(movie_name, movie_rating, quality, None, imdb_id)
                     is_download_successful = self.__download_file(bin_content_tor, bin_content_img, path, movie_name, movie_id)
@@ -314,7 +314,7 @@ class Scraper:
         self.existing_file_counter = 0
         return True
 
-    def __log_csv(self, id, name, year, language, rating, quality, yts_url, torrent_url,imdb_id):
+    def __log_csv(self, id, name, year, language, rating, quality, yts_url, torrent_url, imdb_id):
         path = os.path.join(os.path.curdir, 'YTS-Scraper.csv')
         csv_exists = os.path.isfile(path)
 
@@ -333,7 +333,7 @@ class Scraper:
                              'Quality': quality,
                              'YTS URL': yts_url,
                              'Torrent URL': torrent_url,
-                             'IMBD': torrent_url
+                             'IMBD': imdb_id
                             })
 
 
